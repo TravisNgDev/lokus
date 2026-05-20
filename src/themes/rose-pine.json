@@ -5,6 +5,7 @@
     "--app-text": "#e0def4",
     "--app-panel": "#1f1d2e",
     "--app-panel-secondary": "#26233a",
+    "--panel-secondary": "#26233a",
     "--app-border": "#403d52",
     "--app-border-hover": "#524f67",
     "--app-muted": "#6e6a86",

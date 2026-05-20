@@ -10,7 +10,7 @@ const WS_CONFIG_REL = ".lokus/config.json";
 // These must match CSS variables defined in src/styles/globals.css and tailwind.config.cjs
 const THEME_TOKEN_KEYS = [
   // Core tokens
-  "--bg", "--text", "--panel", "--border", "--muted", "--accent", "--accent-fg",
+  "--bg", "--text", "--panel", "--panel-secondary", "--border", "--muted", "--accent", "--accent-fg",
   // Tab colors
   "--tab-active",
   // Task status colors
@@ -26,6 +26,7 @@ const THEME_TOKEN_KEYS = [
 const BUILT_IN_THEME_TOKENS = {
   // Core tokens (Lokus Dark defaults)
   "--bg": "24 22 31", "--text": "224 221 240", "--panel": "32 30 41",
+  "--panel-secondary": "40 38 51",
   "--border": "54 51 67", "--muted": "120 117 142", "--accent": "224 168 114", "--accent-fg": "255 255 255",
   // Tab colors
   "--tab-active": "40 38 51",
@@ -42,10 +43,10 @@ const BUILT_IN_THEME_TOKENS = {
 // Built-in themes (2 signature + 2 community favorites)
 const DEFAULT_THEMES = ["lokus-dark", "lokus-light", "rose-pine", "tokyo-night"];
 const DEFAULT_THEME_CONTENT = {
-  "lokus-dark": `{"name": "Lokus Dark", "tokens": {"--bg": "#18161f", "--text": "#e0ddf0", "--panel": "#201e29", "--border": "#363343", "--muted": "#78758e", "--accent": "#e0a872", "--accent-fg": "#ffffff", "--task-todo": "#78758e", "--task-progress": "#e0a872", "--task-urgent": "#eb6f92", "--task-question": "#f6c177", "--task-completed": "#6ec98f", "--task-cancelled": "#78758e", "--task-delegated": "#c4a7e7", "--danger": "#eb6f92", "--success": "#6ec98f", "--warning": "#f6c177", "--info": "#8caaee", "--editor-placeholder": "#78758e"}}`,
-  "lokus-light": `{"name": "Lokus Light", "tokens": {"--bg": "#f9f5ef", "--text": "#2b2738", "--panel": "#f0ebe3", "--border": "#d4cec5", "--muted": "#817c9c", "--accent": "#c27830", "--accent-fg": "#ffffff", "--task-todo": "#817c9c", "--task-progress": "#c27830", "--task-urgent": "#c23c5a", "--task-question": "#b88425", "--task-completed": "#28a06e", "--task-cancelled": "#817c9c", "--task-delegated": "#8b5cf6", "--danger": "#c23c5a", "--success": "#28a06e", "--warning": "#b88425", "--info": "#5a7fe8", "--editor-placeholder": "#817c9c"}}`,
-  "rose-pine": `{"name": "Rosé Pine", "tokens": {"--bg": "#191724", "--text": "#e0def4", "--panel": "#1f1d2e", "--border": "#403d52", "--muted": "#6e6a86", "--accent": "#c4a7e7", "--accent-fg": "#191724", "--task-todo": "#6e6a86", "--task-progress": "#c4a7e7", "--task-urgent": "#eb6f92", "--task-question": "#f6c177", "--task-completed": "#9ccfd8", "--task-cancelled": "#6e6a86", "--task-delegated": "#ebbcba", "--danger": "#eb6f92", "--success": "#9ccfd8", "--warning": "#f6c177", "--info": "#31748f", "--editor-placeholder": "#6e6a86"}}`,
-  "tokyo-night": `{"name": "Tokyo Night", "tokens": {"--bg": "#1a1b26", "--text": "#a9b1d6", "--panel": "#1f2335", "--border": "#3b4261", "--muted": "#565f89", "--accent": "#7aa2f7", "--accent-fg": "#1a1b26", "--task-todo": "#565f89", "--task-progress": "#7aa2f7", "--task-urgent": "#f7768e", "--task-question": "#e0af68", "--task-completed": "#9ece6a", "--task-cancelled": "#565f89", "--task-delegated": "#bb9af7", "--danger": "#f7768e", "--success": "#9ece6a", "--warning": "#e0af68", "--info": "#2ac3de", "--editor-placeholder": "#565f89"}}`
+  "lokus-dark": `{"name": "Lokus Dark", "tokens": {"--bg": "#18161f", "--text": "#e0ddf0", "--panel": "#201e29", "--panel-secondary": "#282633", "--border": "#363343", "--muted": "#78758e", "--accent": "#e0a872", "--accent-fg": "#ffffff", "--task-todo": "#78758e", "--task-progress": "#e0a872", "--task-urgent": "#eb6f92", "--task-question": "#f6c177", "--task-completed": "#6ec98f", "--task-cancelled": "#78758e", "--task-delegated": "#c4a7e7", "--danger": "#eb6f92", "--success": "#6ec98f", "--warning": "#f6c177", "--info": "#8caaee", "--editor-placeholder": "#78758e"}}`,
+  "lokus-light": `{"name": "Lokus Light", "tokens": {"--bg": "#f9f5ef", "--text": "#2b2738", "--panel": "#f0ebe3", "--panel-secondary": "#e8e2d9", "--border": "#d4cec5", "--muted": "#817c9c", "--accent": "#c27830", "--accent-fg": "#ffffff", "--task-todo": "#817c9c", "--task-progress": "#c27830", "--task-urgent": "#c23c5a", "--task-question": "#b88425", "--task-completed": "#28a06e", "--task-cancelled": "#817c9c", "--task-delegated": "#8b5cf6", "--danger": "#c23c5a", "--success": "#28a06e", "--warning": "#b88425", "--info": "#5a7fe8", "--editor-placeholder": "#817c9c"}}`,
+  "rose-pine": `{"name": "Rosé Pine", "tokens": {"--bg": "#191724", "--text": "#e0def4", "--panel": "#1f1d2e", "--panel-secondary": "#26233a", "--border": "#403d52", "--muted": "#6e6a86", "--accent": "#c4a7e7", "--accent-fg": "#191724", "--task-todo": "#6e6a86", "--task-progress": "#c4a7e7", "--task-urgent": "#eb6f92", "--task-question": "#f6c177", "--task-completed": "#9ccfd8", "--task-cancelled": "#6e6a86", "--task-delegated": "#ebbcba", "--danger": "#eb6f92", "--success": "#9ccfd8", "--warning": "#f6c177", "--info": "#31748f", "--editor-placeholder": "#6e6a86"}}`,
+  "tokyo-night": `{"name": "Tokyo Night", "tokens": {"--bg": "#1a1b26", "--text": "#a9b1d6", "--panel": "#1f2335", "--panel-secondary": "#24283b", "--border": "#3b4261", "--muted": "#565f89", "--accent": "#7aa2f7", "--accent-fg": "#1a1b26", "--task-todo": "#565f89", "--task-progress": "#7aa2f7", "--task-urgent": "#f7768e", "--task-question": "#e0af68", "--task-completed": "#9ece6a", "--task-cancelled": "#565f89", "--task-delegated": "#bb9af7", "--danger": "#f7768e", "--success": "#9ece6a", "--warning": "#e0af68", "--info": "#2ac3de", "--editor-placeholder": "#565f89"}}`
 };
 
 // --- File System & JSON Helpers ---
@@ -65,16 +66,16 @@ let tauriInitialized = false;
 
 async function initializeTauri() {
   if (tauriInitialized) return;
-  
+
   // In test environment, always try to load the modules (they'll be mocked)
   const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
-  
+
   if (isTauri || isTest) {
     try {
       ({ join, appDataDir } = await import("@tauri-apps/api/path"));
       ({ exists, readDir, readTextFile, writeTextFile, mkdir } = await import("@tauri-apps/plugin-fs"));
       tauriInitialized = true;
-      
+
       // If we're in test mode, act like Tauri is available
       if (isTest) {
         isTauri = true;
@@ -323,9 +324,9 @@ export async function applyInitialTheme() {
 // Get system preferred theme
 export function getSystemPreferredTheme() {
   if (typeof window === 'undefined') return 'light';
-  
+
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
+
   // On Windows, we could also check registry for specific Windows theme
   // For now, we'll use the standard media query
   return prefersDark ? 'lokus-dark' : 'lokus-light';

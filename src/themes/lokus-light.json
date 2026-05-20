@@ -3,8 +3,10 @@
   "tokens": {
     "--app-bg": "#f9f5ef",
     "--app-text": "#2b2738",
+    "--tab-active": "#f0ebe3",
     "--app-panel": "#f0ebe3",
     "--app-panel-secondary": "#e8e2d9",
+    "--panel-secondary": "#e8e2d9",
     "--app-border": "#d4cec5",
     "--app-border-hover": "#c0bab0",
     "--app-muted": "#817c9c",

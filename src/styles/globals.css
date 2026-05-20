@@ -9,7 +9,7 @@
   /* Obsidian-inspired Typography */
   --font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Text', 'Segoe UI', sans-serif;
   --font-mono: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
-  
+
   /* Obsidian-inspired sizing */
   --text-xs: 11px;
   --text-sm: 13px;
@@ -280,7 +280,7 @@ body {
 }
 
 /* Apply no-select to common UI elements */
-aside, nav, .obsidian-tab, .obsidian-button, .obsidian-file-item, 
+aside, nav, .obsidian-tab, .obsidian-button, .obsidian-file-item,
 .obsidian-status-bar, button, .sidebar, .file-tree, [role="button"] {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -2095,7 +2095,7 @@ html, body {
   .hover-only {
     display: none;
   }
-  
+
   /* Make hover effects work on active/tap */
   .hover\\:bg-app-panel:active {
     background-color: rgb(var(--panel));
@@ -2105,13 +2105,13 @@ html, body {
 /* Target devices with coarse pointer (touch) */
 @media (pointer: coarse) {
   /* Increase touch targets */
-  button, 
+  button,
   [role="button"],
   .clickable {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Add more padding to interactive elements */
   .interactive {
     padding: 12px;
