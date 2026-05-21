@@ -158,7 +158,7 @@ function TaskCard({ task, onUpdate, onDelete, isDragging }) {
               rounded-md px-2 py-1 text-sm font-semibold outline-none"
           />
         ) : (
-          <div className="flex-1 text-sm font-semibold tracking-wide">
+          <div className="flex-1 text-sm text-app-muted font-semibold tracking-wide">
             {task.title}
           </div>
         )}
@@ -301,7 +301,7 @@ function KanbanColumn({
 
   const handleAddTask = useCallback(async () => {
     if (!newTaskTitle.trim()) return;
-    
+
      if (dueDate && new Date(dueDate) < new Date()) {
     toast.error("⛔ Due date cannot be in the past");
     return;
@@ -557,7 +557,7 @@ export default function KanbanBoard({ workspacePath, boardPath, onFileOpen }) {
   );
 
   console.log("board", board);
-  
+
   // Load board from file
   const loadBoard = useCallback(async () => {
     if (!boardPath) return;
