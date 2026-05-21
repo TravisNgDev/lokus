@@ -155,10 +155,10 @@ function TaskCard({ task, onUpdate, onDelete, isDragging }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="flex-1 bg-blue-50/10 border border-blue-500/30
-              rounded-md px-2 py-1 text-sm font-semibold outline-none"
+              rounded-md px-2 py-1 text-sm text-app-muted font-semibold outline-none"
           />
         ) : (
-          <div className="flex-1 text-sm font-semibold tracking-wide">
+          <div className="flex-1 text-sm text-app-muted font-semibold tracking-wide">
             {task.title}
           </div>
         )}
@@ -183,7 +183,7 @@ function TaskCard({ task, onUpdate, onDelete, isDragging }) {
                   setMode((prev)=> prev === "edit" ? "view" : "edit");
                   setShowMenu(false);
                 }}
-                className="menu-item flex items-center gap-2 hover:text-blue-500"
+                className="menu-item text-app-muted flex items-center gap-2 hover:text-blue-500"
               >
                 Edit
               </button>
@@ -208,7 +208,7 @@ function TaskCard({ task, onUpdate, onDelete, isDragging }) {
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Add description…"
           className="mt-3 w-full rounded-lg border
-            bg-slate-900/40 p-2 text-xs outline-none"
+            bg-app-bg p-2 text-xs outline-none"
         />
       ) : task.description ? (
         <div className="mt-3 text-xs text-app-muted bg-app-panel/30
@@ -228,12 +228,12 @@ function TaskCard({ task, onUpdate, onDelete, isDragging }) {
               value={dueDate}
               min={getNowLocalISOString()}
               onChange={(e) => setDueDate(e.target.value)}
-              className="rounded-md border bg-yellow-500/10
+              className="rounded-md border bg-app-panel/40
                 border-yellow-500/30  py-0.5 text-xs outline-none"
             />
           ) : task.due_date ? (
-            <span className="rounded-full bg-yellow-500/15
-              px-2 py-0.5 text-yellow-400">
+            <span className="rounded-full bg-app-panel/40
+              px-2 py-0.5 text-app-muted">
               {formatDateTime(task.due_date)}
             </span>
           ) : (
@@ -301,7 +301,7 @@ function KanbanColumn({
 
   const handleAddTask = useCallback(async () => {
     if (!newTaskTitle.trim()) return;
-    
+
      if (dueDate && new Date(dueDate) < new Date()) {
     toast.error("⛔ Due date cannot be in the past");
     return;
@@ -557,7 +557,7 @@ export default function KanbanBoard({ workspacePath, boardPath, onFileOpen }) {
   );
 
   console.log("board", board);
-  
+
   // Load board from file
   const loadBoard = useCallback(async () => {
     if (!boardPath) return;
