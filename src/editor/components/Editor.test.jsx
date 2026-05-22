@@ -87,7 +87,8 @@ vi.mock('prosemirror-dropcursor', () => ({
 }))
 
 vi.mock('prosemirror-gapcursor', () => ({
-  gapCursor: vi.fn(() => stubPlugin())
+  gapCursor: vi.fn(() => stubPlugin()),
+  GapCursor: class GapCursor {},
 }))
 
 vi.mock('prosemirror-inputrules', () => ({

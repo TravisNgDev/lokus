@@ -12,7 +12,7 @@ import { baseKeymap, toggleMark, setBlockType, wrapIn, chainCommands } from 'pro
 import { history, undo, redo } from 'prosemirror-history';
 import { splitListItem, liftListItem, sinkListItem } from 'prosemirror-schema-list';
 import { dropCursor } from 'prosemirror-dropcursor';
-import { gapCursor } from 'prosemirror-gapcursor';
+import { gapCursor, GapCursor } from 'prosemirror-gapcursor';
 import { InputRule, inputRules, wrappingInputRule, textblockTypeInputRule } from 'prosemirror-inputrules';
 import { createEditorCommands, insertContent as pmInsertContent } from '../commands/index.js';
 
@@ -190,6 +190,34 @@ const Editor = forwardRef(({ content, onContentChange, onEditorReady, isLoading 
         }
         return true;
       },
+    });
+
+    // ── GapCursor join keymap ───────────────────────────────────────────
+    // When a GapCursor sits between two textblocks, Backspace/Delete
+    // should join them (merge text) instead of selecting the adjacent
+    // block. This fixes the UX issue where pressing Backspace on the
+    // "gap" after an image deletes the image.
+    function gapCursorJoinTextblocks(state, dispatch) {
+      const { selection } = state;
+      // Only act when the selection is a GapCursor
+      if (!(selection instanceof GapCursor)) return false;
+      const $pos = selection.$from;
+      const before = $pos.nodeBefore;
+      const after = $pos.nodeAfter;
+      // Both sides must be textblocks (paragraph, heading, etc.)
+      if (!before || !after || !before.isTextblock || !after.isTextblock) {
+        return false;
+      }
+      if (dispatch) {
+        // Join the two textblocks into one
+        dispatch(state.tr.join($pos.pos));
+      }
+      return true;
+    }
+
+    const gapCursorKeymap = keymap({
+      Backspace: gapCursorJoinTextblocks,
+      Delete: gapCursorJoinTextblocks,
     });
 
     // ── List keymap ────────────────────────────────────────────────────
@@ -442,6 +470,7 @@ const Editor = forwardRef(({ content, onContentChange, onEditorReady, isLoading 
       // ── Base keymap & core ──────────────────────────────────────────
       listKeymap,
       blockResetKeymap,
+      gapCursorKeymap,
       keymap(baseKeymap),
       history(),
       keymap({ 'Mod-z': undo, 'Mod-y': redo, 'Mod-Shift-z': redo }),
@@ -469,6 +498,34 @@ const Editor = forwardRef(({ content, onContentChange, onEditorReady, isLoading 
       createMermaidInputRulesPlugin(schema),
     ];
 
+    // ── Paragraph nodeView ───────────────────────────────────────────────
+    // Adds the 'image-only-paragraph' class when a paragraph contains
+    // only a single image node, so CSS can collapse the extra line
+    // height created by ProseMirror's trailing break.
+    const paragraphNodeView = (node) => {
+      const dom = document.createElement('p')
+
+      function updateClass() {
+        const isImageOnly =
+          node.childCount === 1 && node.firstChild?.type.name === 'image'
+        dom.classList.toggle('image-only-paragraph', isImageOnly)
+      }
+
+      updateClass()
+
+      return {
+        dom,
+        contentDOM: dom,
+        update(updatedNode) {
+          if (updatedNode.type.name !== 'paragraph') return false
+          node = updatedNode
+          updateClass()
+          return true
+        },
+        destroy() {},
+      }
+    }
+
     // ── Node views ──────────────────────────────────────────────────────
     const pmNodeViews = {
       mermaid: mermaidNodeView,
@@ -477,6 +534,7 @@ const Editor = forwardRef(({ content, onContentChange, onEditorReady, isLoading 
       canvasLink: createCanvasLinkNodeView,
       graphLink: createGraphLinkNodeView,
       image: imageNodeView,
+      paragraph: paragraphNodeView,
     };
 
     // ── Load editor settings then finalize ──────────────────────────────

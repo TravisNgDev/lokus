@@ -247,6 +247,30 @@
     box-shadow: 0 4px 16px rgb(var(--bg) / 0.2);
 }
 
+/* Collapse extra line on paragraphs that contain only an image */
+.ProseMirror p.image-only-paragraph {
+    margin: 0;
+    line-height: 0;
+}
+
+.ProseMirror p.image-only-paragraph img.editor-image {
+    display: block;
+    margin: 0;
+}
+
+.ProseMirror p.image-only-paragraph + p {
+    margin-top: 0;
+}
+
+/* Hide ProseMirror separator inside image-only paragraphs */
+.ProseMirror p.image-only-paragraph .ProseMirror-separator {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: none;
+    margin: 0;
+}
+
 /* Stylish Task List checkboxes */
 ul[data-type="taskList"] {
     list-style: none;
